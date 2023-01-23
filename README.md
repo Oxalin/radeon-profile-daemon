@@ -21,7 +21,7 @@ There is a service file for systemd in radeon-profile-daemon/extra. If installed
 
 # tmpfiles
 
-There is a tmpfiles file that can be used by opentmpfiles or systemd-tmpfiles in radeon-profile-daemon/extra. If installed, it will make sure the /run/radeon-profile-daemon directory is created with the correct ownership and permissions.
+There is a tmpfiles file that can be used by opentmpfiles or systemd-tmpfiles in radeon-profile-daemon/extra. If installed, it will make sure the /run/radeon-profile-daemon directory is created with the correct ownership and permissions. If installed manually copy the tmpfiles to `/usr/lib/tmpfiles.d` and restart the service.
 
 # Links
 
