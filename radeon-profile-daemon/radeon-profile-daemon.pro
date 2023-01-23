@@ -71,6 +71,10 @@ bin.files = target/radeon-profile-daemon
 service.path = /usr/lib/systemd/system
 service.files = extra/radeon-profile-daemon.service
 
+tmpfiles.path = /usr/lib/tmpfiles.d
+tmpfiles.files = extra/radeon-profile-daemon.tmpfiles
+
 INSTALLS += \
 	bin \
-	service
+        service \
+        tmpfiles
