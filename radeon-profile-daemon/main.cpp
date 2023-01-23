@@ -3,10 +3,13 @@
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication a(argc, argv);
+    QCoreApplication app(argc, argv);
+
+    // Setting the Application version
+    app.setApplicationVersion(appVersion);
 
     rpdThread daemon;
     daemon.start();
 
-    return a.exec();
+    return app.exec();
 }
