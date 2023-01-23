@@ -26,6 +26,7 @@ qrc_*.cpp
 ui_*.h
 Makefile*
 *build-*
+*.qtc_clangd
 
 # QtCreator
 
