@@ -15,6 +15,8 @@
 #ifndef RPDTHREAD_H
 #define RPDTHREAD_H
 
+#include "info.h"
+
 #include <QThread>
 #include <QLocalServer>
 #include <QLocalSocket>
@@ -30,7 +32,6 @@
 #define SIGNAL_SHAREDMEM_KEY '6'
 #define SIGNAL_ALIVE '7'
 
-const QString appVersion = "20190603";
 const QString serverSocketPath = "/run/radeon-profile-daemon/radeon-profile-daemon-server";
 
 class rpdThread : public QThread
