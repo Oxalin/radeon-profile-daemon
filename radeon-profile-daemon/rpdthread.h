@@ -32,8 +32,6 @@
 #define SIGNAL_SHAREDMEM_KEY '6'
 #define SIGNAL_ALIVE '7'
 
-const QString serverSocketPath = "/run/radeon-profile-daemon/radeon-profile-daemon-server";
-
 class rpdThread : public QThread
 {
     Q_OBJECT
