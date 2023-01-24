@@ -12,13 +12,10 @@
 
 # Qt-es
 
-/.qmake.cache
-/.qmake.stash
-radeon-profile-daemon/.qmake.stash
-*.pro.user
-*.pro.user.*
-*.qbs.user
-*.qbs.user.*
+*/.qmake.cache
+*/.qmake.stash
+*.pro.user*
+*.qbs.user*
 *.moc
 moc_*.cpp
 moc_*.h
@@ -26,8 +23,9 @@ qrc_*.cpp
 ui_*.h
 Makefile*
 *build-*
+*/target
+*.patch
 *.qtc_clangd
-*target*
 
 # QtCreator
 
