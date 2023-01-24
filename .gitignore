@@ -25,6 +25,7 @@ Makefile*
 *build-*
 */target
 *.patch
+.vscode
 *.qtc_clangd
 
 # QtCreator
