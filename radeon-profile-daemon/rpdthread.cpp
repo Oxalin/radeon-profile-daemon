@@ -1,6 +1,11 @@
 
 // copyright marazmista @ 12.05.2014
 
+#include "unistd.h"
+#include <pwd.h>
+#include <grp.h>
+#include <sys/types.h>
+
 #include "rpdthread.h"
 #include <QFile>
 #include <QFileInfo>
@@ -40,14 +45,44 @@ void rpdThread::newConnection() {
 
 void rpdThread::createServer()
 {
+    uid_t          uid;
+    gid_t          gid;
+    struct passwd *pwd;
+    struct group  *grp;
+
     if (daemonServer.isListening())
         return;
 
     qInfo() << "Awaiting connections...";
 
     QLocalServer::removeServer(serverSocketPath);
-    daemonServer.listen(serverSocketPath);
-    QFile::setPermissions(serverSocketPath, QFile(serverSocketPath).permissions() | QFile::WriteGroup);
+    if (!daemonServer.listen(serverSocketPath)) {
+        qCritical() << "Couldn't connect to server's socket";
+    }
+
+    /*
+     *  To properly allow users from the video group to be able to use Radeon Profile and communicate with the daemon's socket,
+     *  we need to find both the ID of the "root" user (UID) and the "video" group (GID) and apply them to the socket. Then, we
+     *  shall call chown() to change the ownership and apply the proper permissions on the socket.
+     */
+    pwd = getpwnam("root");
+    if (pwd == NULL) {
+        qCritical() << "Failed to get \"root\" UID." << "Can't set proper ownership on the socket...";
+    }
+    uid = pwd->pw_uid;
+
+    grp = getgrnam("video");
+    if (grp == NULL) {
+        qCritical() << "Failed to get \"video\" GID" << "Can't set proper ownership on the socket...";
+    }
+    gid = grp->gr_gid;
+
+    if (chown(serverSocketPath.toUtf8(), uid, gid) == -1) {
+        qCritical() << "chown failed. This won't work between us..." << "Check what is missing (root:video, path to socket or other permissions)";
+        return;
+    }
+
+    QFile::setPermissions(serverSocketPath, QFile::WriteOwner | QFile::ReadOwner | QFile::WriteGroup | QFile::ReadGroup);
 }
 
 void rpdThread::closeConnection()
